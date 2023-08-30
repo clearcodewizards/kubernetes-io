@@ -1,0 +1,30 @@
+version: 2.1
+
+jobs:
+  test-2.7.8:
+    docker:
+      - image: ruby:2.7.8
+    steps:
+      - checkout
+      - run:
+          command: |
+            cd kubernetes
+            bundle install
+            bundle exec rspec
+  test-3.2.2:
+    docker:
+      - image: ruby:3.2.2
+    steps:
+      - checkout
+      - run:
+          command: |
+            cd kubernetes
+            bundle install
+            bundle exec rspec
+
+# Orchestrate our job run sequence
+workflows:
+  test:
+    jobs:
+      - test-2.7.8
+      - test-3.2.2
