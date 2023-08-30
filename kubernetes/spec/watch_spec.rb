@@ -35,7 +35,7 @@ describe 'WatchClient' do
                'Authorization' => '',
                'Content-Type' => 'application/json',
                'Expect' => '',
-               'User-Agent' => 'Swagger-Codegen/1.0.0-alpha2/ruby'
+               'User-Agent' => "Swagger-Codegen/#{Kubernetes::VERSION}/ruby"
              }
            )
            .to_return(status: 200, body: "{}\n", headers: {})
@@ -60,7 +60,7 @@ describe 'WatchClient' do
                'Authorization' => '',
                'Content-Type' => 'application/json',
                'Expect' => '',
-               'User-Agent' => 'Swagger-Codegen/1.0.0-alpha2/ruby'
+               'User-Agent' => "Swagger-Codegen/#{Kubernetes::VERSION}/ruby"
              }
            )
            .to_return(status: 200, body: body, headers: {})
