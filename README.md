@@ -1,3 +1,6 @@
+[![CircleCI](https://circleci.com/gh/clearcodewizards/kubernetes-io.svg?style=svg)](https://circleci.com/gh/clearcodewizards/kubernetes-io)
+
+
 # Kubernetes Ruby Client
 
 Ruby client for the [kubernetes](http://kubernetes.io/) API.
