@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright 2017 The Kubernetes Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -38,7 +40,7 @@ describe Kubernetes do
       end
     end
 
-    it 'should configure client configuration from in-cluster config' do
+    it 'configures client configuration from in-cluster config' do
       allow(Kubernetes::InClusterConfig)
         .to receive(:new)
         .and_return(incluster_config)
@@ -50,7 +52,7 @@ describe Kubernetes do
       end
       actual = Kubernetes::Configuration.new
 
-      Kubernetes.load_incluster_config(client_configuration: actual)
+      described_class.load_incluster_config(client_configuration: actual)
       expect(actual).to be_same_configuration_as(expected)
     end
   end
@@ -59,7 +61,7 @@ describe Kubernetes do
     file = Kubernetes::Testing.file_fixture('config/config').to_s
     let(:kube_config) { Kubernetes::KubeConfig.new(file, TEST_KUBE_CONFIG) }
 
-    it 'should configure client configuration from kube_config' do
+    it 'configures client configuration from kube_config' do
       kubeconfig_path = 'kubeconfig/path'
       allow(Kubernetes::KubeConfig)
         .to receive(:new)
@@ -74,7 +76,7 @@ describe Kubernetes do
       end
       actual = Kubernetes::Configuration.new
 
-      Kubernetes.load_kube_config(
+      described_class.load_kube_config(
         kubeconfig_path,
         context: 'context_ssl',
         client_configuration: actual
@@ -83,13 +85,13 @@ describe Kubernetes do
     end
   end
 
-  context '#create_temp_file_with_base64content' do
+  describe '#create_temp_file_with_base64content' do
     before do
-      Kubernetes.clear_temp_files
+      described_class.clear_temp_files
     end
 
     context 'when it is called at first time' do
-      it 'should return temp file path' do
+      it 'returns temp file path' do
         expected_path = 'tempfile-path'
         content = TEST_DATA_BASE64
         io = double('io')
@@ -97,17 +99,17 @@ describe Kubernetes do
         expect(io).to receive(:write).with(TEST_DATA)
         allow(Tempfile).to receive(:open).and_yield(io)
 
-        path = Kubernetes.create_temp_file_with_base64content(content)
+        path = described_class.create_temp_file_with_base64content(content)
         expect(path).to eq(expected_path)
       end
     end
 
     context 'when it is already called' do
-      it 'should return cached value' do
+      it 'returns cached value' do
         content = TEST_DATA_BASE64
-        expected_path = Kubernetes.create_temp_file_with_base64content(content)
+        expected_path = described_class.create_temp_file_with_base64content(content)
 
-        path = Kubernetes.create_temp_file_with_base64content(content)
+        path = described_class.create_temp_file_with_base64content(content)
         expect(path).to eq(expected_path)
       end
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright 2017 The Kubernetes Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,18 +22,12 @@ module Kubernetes
   # The InClusterConfig class represents configuration for authn/authz in a
   # Kubernetes cluster.
   class InClusterConfig
-    # rubocop:disable Metrics/LineLength
-    SERVICE_HOST_ENV_NAME = 'KUBERNETES_SERVICE_HOST'.freeze
-    SERVICE_PORT_ENV_NAME = 'KUBERNETES_SERVICE_PORT'.freeze
-    SERVICE_TOKEN_FILENAME = '/var/run/secrets/kubernetes.io/serviceaccount/token'.freeze
-    SERVICE_CA_CERT_FILENAME = '/var/run/secrets/kubernetes.io/serviceaccount/ca.crt'.freeze
+    SERVICE_HOST_ENV_NAME = 'KUBERNETES_SERVICE_HOST'
+    SERVICE_PORT_ENV_NAME = 'KUBERNETES_SERVICE_PORT'
+    SERVICE_TOKEN_FILENAME = '/var/run/secrets/kubernetes.io/serviceaccount/token'
+    SERVICE_CA_CERT_FILENAME = '/var/run/secrets/kubernetes.io/serviceaccount/ca.crt'
     TOKEN_REFRESH_PERIOD = 60 # 1 minute
-    # rubocop:enable Metrics/LineLength
-
-    attr_accessor :host
-    attr_accessor :port
-    attr_accessor :token
-    attr_accessor :token_expires_at
+    attr_accessor :host, :port, :token, :token_expires_at
 
     def validate
       unless (self.host = env[SERVICE_HOST_ENV_NAME]) &&
@@ -39,10 +35,8 @@ module Kubernetes
         raise ConfigError, 'Service host/port is not set'
       end
 
-      # rubocop:disable Metrics/LineLength
       raise ConfigError, 'Service token file does not exists' unless File.file?(token_file)
       raise ConfigError, 'Service token file does not exists' unless File.file?(ca_cert)
-      # rubocop:enable Metrics/LineLength
     end
 
     def self.in_cluster?
@@ -89,16 +83,16 @@ module Kubernetes
 
       Configuration.instance_variable_set(:@in_cluster_config, self)
       Configuration.prepend(Module.new do
-        # rubocop:disable Metrics/LineLength
         def api_key_with_prefix(identifier)
           in_cluster_config = self.class.instance_variable_get(:@in_cluster_config)
-          if identifier == 'authorization' && @api_key.key?(identifier) && in_cluster_config.token_expires_at <= Time.now
+          if identifier == 'authorization' &&
+             @api_key.key?(identifier) &&
+             in_cluster_config.token_expires_at <= Time.now
             in_cluster_config.load_token
-            @api_key[identifier] = 'Bearer ' + in_cluster_config.token
+            @api_key[identifier] = "Bearer #{in_cluster_config.token}"
           end
           super identifier
         end
-        # rubocop:enable Metrics/LineLength
       end)
     end
     # rubocop:enable Metrics/AbcSize

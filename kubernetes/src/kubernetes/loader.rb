@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright 2019 The Kubernetes Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -36,11 +38,11 @@ module Kubernetes
 
     def self.load_local_config(result)
       # KUBECONFIG environment variable
-      kc = (ENV['KUBECONFIG']).to_s
+      kc = ENV.fetch('KUBECONFIG', nil).to_s
       return load_file_config(kc, result) if File.exist?(kc)
 
       # default home location
-      kc = "#{ENV['HOME']}/.kube/config"
+      kc = "#{Dir.home}/.kube/config"
       return unless File.exist?(kc)
 
       load_file_config(kc, result)

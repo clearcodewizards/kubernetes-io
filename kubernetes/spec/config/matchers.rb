@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright 2017 The Kubernetes Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,9 +20,7 @@ RSpec::Matchers.define :be_same_configuration_as do |expected|
       {}.tap do |hash|
         configuration.instance_variables.each do |var|
           value = configuration.instance_variable_get(var)
-          if value.is_a?(Hash) || value.is_a?(String)
-            hash[var.to_s.tr('@', '')] = value
-          end
+          hash[var.to_s.tr('@', '')] = value if value.is_a?(Hash) || value.is_a?(String)
         end
       end
     end

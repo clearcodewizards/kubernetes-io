@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright 2017 The Kubernetes Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,22 +19,22 @@ require 'helpers/file_fixtures'
 
 TEST_TOKEN_FILE = Kubernetes::Testing.file_fixture('tokens/token')
 
-TEST_DATA = 'test-data'.freeze
+TEST_DATA = 'test-data'
 TEST_DATA_BASE64 = Base64.strict_encode64(TEST_DATA)
 
-TEST_HOST = 'http://test-host'.freeze
-TEST_USERNAME = 'me'.freeze
-TEST_PASSWORD = 'pass'.freeze
+TEST_HOST = 'http://test-host'
+TEST_USERNAME = 'me'
+TEST_PASSWORD = 'pass'
 # token for me:pass
-TEST_BASIC_TOKEN = 'Basic bWU6cGFzcw=='.freeze
-TEST_AZURE_TOKEN = 'Bearer some-token'.freeze
+TEST_BASIC_TOKEN = 'Basic bWU6cGFzcw=='
+TEST_AZURE_TOKEN = 'Bearer some-token'
 
-TEST_SSL_HOST = 'https://test-host'.freeze
-TEST_CERTIFICATE_AUTH = 'cert-auth'.freeze
+TEST_SSL_HOST = 'https://test-host'
+TEST_CERTIFICATE_AUTH = 'cert-auth'
 TEST_CERTIFICATE_AUTH_BASE64 = Base64.strict_encode64(TEST_CERTIFICATE_AUTH)
-TEST_CLIENT_KEY = 'client-key'.freeze
+TEST_CLIENT_KEY = 'client-key'
 TEST_CLIENT_KEY_BASE64 = Base64.strict_encode64(TEST_CLIENT_KEY)
-TEST_CLIENT_CERT = 'client-cert'.freeze
+TEST_CLIENT_CERT = 'client-cert'
 TEST_CLIENT_CERT_BASE64 = Base64.strict_encode64(TEST_CLIENT_CERT)
 
 TEST_CONTEXT_DEFAULT = {

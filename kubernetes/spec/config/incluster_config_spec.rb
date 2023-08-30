@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright 2017 The Kubernetes Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,9 +22,9 @@ require 'kubernetes/config/incluster_config'
 
 # rubocop:disable Metrics/BlockLength
 describe Kubernetes::InClusterConfig do
-  context '#configure' do
+  describe '#configure' do
     let(:incluster_config) do
-      Kubernetes::InClusterConfig.new.tap do |c|
+      described_class.new.tap do |c|
         c.instance_variable_set(
           :@env,
           Kubernetes::InClusterConfig::SERVICE_HOST_ENV_NAME => 'localhost',
@@ -43,7 +45,7 @@ describe Kubernetes::InClusterConfig do
       end
     end
 
-    it 'should configure configuration' do
+    it 'configures configuration' do
       expected = Kubernetes::Configuration.new do |c|
         c.scheme = 'https'
         c.host = 'localhost:443'
@@ -60,7 +62,7 @@ describe Kubernetes::InClusterConfig do
         :@token_file,
         Kubernetes::Testing.file_fixture('tokens/token2').to_s
       )
-      allow(Time).to receive(:now).and_return(Time.now+5)
+      allow(Time).to receive(:now).and_return(Time.now + 5)
       actual.api_key_with_prefix('authorization')
 
       expected.api_key['authorization'] = 'Bearer token2'
@@ -69,9 +71,9 @@ describe Kubernetes::InClusterConfig do
     end
   end
 
-  context '#validate' do
+  describe '#validate' do
     let(:incluster_config) do
-      Kubernetes::InClusterConfig.new.tap do |c|
+      described_class.new.tap do |c|
         c.instance_variable_set(
           :@env,
           Kubernetes::InClusterConfig::SERVICE_HOST_ENV_NAME => 'localhost',
@@ -95,7 +97,7 @@ describe Kubernetes::InClusterConfig do
     end
 
     context 'if SERVICE_HOST_ENV_NAME env variable is not set' do
-      it 'should raise ConfigError' do
+      it 'raises ConfigError' do
         env_key = Kubernetes::InClusterConfig::SERVICE_HOST_ENV_NAME
         incluster_config.env[env_key] = nil
 
@@ -106,7 +108,7 @@ describe Kubernetes::InClusterConfig do
     end
 
     context 'if SERVICE_PORT_ENV_NAME env variable is not set' do
-      it 'should raise ConfigError' do
+      it 'raises ConfigError' do
         env_key = Kubernetes::InClusterConfig::SERVICE_PORT_ENV_NAME
         incluster_config.env[env_key] = nil
 
@@ -137,8 +139,8 @@ describe Kubernetes::InClusterConfig do
     end
   end
 
-  context '#ca_cert' do
-    let(:incluster_config) { Kubernetes::InClusterConfig.new }
+  describe '#ca_cert' do
+    let(:incluster_config) { described_class.new }
 
     it 'shold return "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"' do
       expect(incluster_config.ca_cert).to eq(
@@ -147,8 +149,8 @@ describe Kubernetes::InClusterConfig do
     end
   end
 
-  context '#token_file' do
-    let(:incluster_config) { Kubernetes::InClusterConfig.new }
+  describe '#token_file' do
+    let(:incluster_config) { described_class.new }
 
     it 'shold return "/var/run/secrets/kubernetes.io/serviceaccount/token"' do
       expect(incluster_config.token_file).to eq(

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright 2019 The Kubernetes Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,11 +18,11 @@ require 'spec_helper'
 require 'kubernetes/watch'
 
 describe 'WatchClient' do
-  it 'should construct correctly' do
+  it 'constructs correctly' do
     Kubernetes::Watch.new(nil)
   end
 
-  it 'should connect correctly with resource version' do
+  it 'connects correctly with resource version' do
     config = Kubernetes::Configuration.new
     config.scheme = 'http'
     config.host = 'k8s.io:8080'
@@ -45,7 +47,7 @@ describe 'WatchClient' do
     end
   end
 
-  it 'should connect correctly' do
+  it 'connects correctly' do
     config = Kubernetes::Configuration.new
     config.scheme = 'http'
     config.host = 'k8s.io:8080'
@@ -74,7 +76,7 @@ describe 'WatchClient' do
     expect(result[1]['baz']).to eq('blah')
   end
 
-  it 'should parse chunks correctly' do
+  it 'parses chunks correctly' do
     client = Kubernetes::Watch.new(nil)
     last = ''
 

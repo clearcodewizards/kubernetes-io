@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright 2019 The Kubernetes Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -45,14 +47,14 @@ module Kubernetes
 
     def split_lines(last, chunk)
       data = chunk
-      data = last + '' + data
+      data = "#{last}#{data}"
 
       ix = data.rindex("\n")
       return [data, []] unless ix
 
       complete = data[0..ix]
       last = data[(ix + 1)..data.length]
-      [last, complete.split(/\n/)]
+      [last, complete.split("\n")]
     end
   end
 end

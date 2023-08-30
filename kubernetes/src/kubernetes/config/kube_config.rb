@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright 2017 The Kubernetes Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,12 +25,12 @@ require 'kubernetes/config/error'
 require 'kubernetes/utils'
 
 module Kubernetes
-  # rubocop:disable ClassLength
+  # rubocop:disable Metrics/ClassLength
   # The KubeConfig class represents configuration based on a YAML
   # representation.
   class KubeConfig
     KUBE_CONFIG_DEFAULT_LOCATION = File.expand_path('~/.kube/config')
-    AUTH_KEY = 'authorization'.freeze
+    AUTH_KEY = 'authorization'
 
     class << self
       def list_context_names(config_file = KUBE_CONFIG_DEFAULT_LOCATION)
@@ -85,10 +87,10 @@ module Kubernetes
     end
 
     def setup_ssl(cluster, user, config)
-      # rubocop:disable DoubleNegation
+      # rubocop:disable Style/DoubleNegation
       config.verify_ssl = !!cluster['verify-ssl']
       config.verify_ssl_host = !!cluster['verify-ssl']
-      # rubocop:enable DoubleNegation
+      # rubocop:enable Style/DoubleNegation
 
       config.ssl_ca_cert = cluster['certificate-authority']
       config.cert_file = user['client-certificate']
@@ -122,7 +124,7 @@ module Kubernetes
       end
     end
 
-    # rubocop:disable AbcSize
+    # rubocop:disable Metrics/AbcSize
     def setup_auth(user)
       # Convert token field to http header
       if user['token']
@@ -135,7 +137,7 @@ module Kubernetes
         user['authorization'] = "Bearer #{token}"
       end
     end
-    # rubocop:enable AbcSize
+    # rubocop:enable Metrics/AbcSize
 
     def list_context_names
       config['contexts'].map { |e| e['name'] }
@@ -143,12 +145,8 @@ module Kubernetes
 
     def find_context(name)
       find_by_name(config['contexts'], 'context', name).tap do |context|
-        if context['cluster']
-          context['cluster'] = find_cluster(context['cluster'])
-        end
-        if context['user'] && !context['user'].empty?
-          context['user'] = find_user(context['user'])
-        end
+        context['cluster'] = find_cluster(context['cluster']) if context['cluster']
+        context['user'] = find_user(context['user']) if context['user'] && !context['user'].empty?
       end
     end
 
@@ -164,8 +162,8 @@ module Kubernetes
       obj = list.find { |item| item['name'] == name }
       raise ConfigError, "#{key}: #{name} not found" unless obj
 
-      obj[key].dup if obj[key]
+      obj[key]&.dup
     end
   end
-  # rubocop:enable ClassLength
+  # rubocop:enable Metrics/ClassLength
 end

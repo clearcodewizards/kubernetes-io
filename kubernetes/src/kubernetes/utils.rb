@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright 2017 The Kubernetes Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -36,7 +38,7 @@ module Kubernetes
   # @param client_configuration [Kubernetes::Configuration] The
   #   Kubernetes::Configuration tp set configs to.
   def load_kube_config(
-    config_file = ENV['KUBECONFIG'],
+    config_file = ENV.fetch('KUBECONFIG', nil),
     context: nil,
     client_configuration: Configuration.default
   )
@@ -54,7 +56,7 @@ module Kubernetes
   #    current_context from config file will be used.
   # @return [Kubernetes::ApiClient] Api client for Kubernetes cluster
   def new_client_from_config(
-    config_file = ENV['KUBECONFIG'],
+    config_file = ENV.fetch('KUBECONFIG', nil),
     context: nil
   )
     config_file ||= KubeConfig::KUBE_CONFIG_DEFAULT_LOCATION

@@ -1,6 +1,7 @@
 gemfile: kubernetes/Gemfile
 rvm:
-  - 2.6
+  - 2.7
+  - 3.2
 
 before_install:
   - gem update --system
