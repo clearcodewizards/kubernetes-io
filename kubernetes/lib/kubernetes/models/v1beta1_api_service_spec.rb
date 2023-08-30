@@ -95,7 +95,7 @@ module Kubernetes
     # @return Array for valid properies with the reasons
     def list_invalid_properties
       invalid_properties = []
-      if !@ca_bundle.nil? && @ca_bundle !~ /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/
+      if !@ca_bundle.nil? && @ca_bundle !~ /^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/
         invalid_properties.push("invalid value for 'ca_bundle', must conform to the pattern /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.")
       end
 
@@ -117,7 +117,7 @@ module Kubernetes
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      return false if !@ca_bundle.nil? && @ca_bundle !~ /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/
+      return false if !@ca_bundle.nil? && @ca_bundle !~ /^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/
       return false if @group_priority_minimum.nil?
       return false if @service.nil?
       return false if @version_priority.nil?
@@ -128,7 +128,7 @@ module Kubernetes
     # Custom attribute writer method with validation
     # @param [Object] ca_bundle Value to be assigned
     def ca_bundle=(ca_bundle)
-      if !ca_bundle.nil? && ca_bundle !~ /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/
+      if !ca_bundle.nil? && ca_bundle !~ /^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/
         raise ArgumentError, 
 "invalid value for 'ca_bundle', must conform to the pattern /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/."
       end
@@ -160,8 +160,8 @@ module Kubernetes
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [ca_bundle, group, group_priority_minimum, insecure_skip_tls_verify, service, version, 
-version_priority].hash
+      [ca_bundle, group, group_priority_minimum, insecure_skip_tls_verify, service, version,
+       version_priority].hash
     end
 
     # Builds the object from hash

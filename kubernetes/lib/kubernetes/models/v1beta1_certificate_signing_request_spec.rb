@@ -67,11 +67,11 @@ module Kubernetes
 
       if attributes.key?(:extra) && (value = attributes[:extra]).is_a?(Array)
           self.extra = value
-        end
+      end
 
       if attributes.key?(:groups) && (value = attributes[:groups]).is_a?(Array)
           self.groups = value
-        end
+      end
 
       self.request = attributes[:request] if attributes.key?(:request)
 
@@ -79,7 +79,7 @@ module Kubernetes
 
       if attributes.key?(:usages) && (value = attributes[:usages]).is_a?(Array)
           self.usages = value
-        end
+      end
 
       self.username = attributes[:username] if attributes.key?(:username)
     end
@@ -92,7 +92,7 @@ module Kubernetes
         invalid_properties.push("invalid value for 'request', request cannot be nil.")
       end
 
-      unless @request&.match?(/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/)
+      unless @request&.match?(/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/)
         invalid_properties.push("invalid value for 'request', must conform to the pattern /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.")
       end
 
@@ -103,7 +103,7 @@ module Kubernetes
     # @return true if the model is valid
     def valid?
       return false if @request.nil?
-      if @request !~ /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/
+      if @request !~ /^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/
         return false
       end
 
@@ -115,7 +115,7 @@ module Kubernetes
     def request=(request)
       raise ArgumentError, 'request cannot be nil' if request.nil?
 
-      unless request&.match?(/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/)
+      unless request&.match?(/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/)
         raise ArgumentError,
               "invalid value for 'request', must conform to the pattern /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/."
       end

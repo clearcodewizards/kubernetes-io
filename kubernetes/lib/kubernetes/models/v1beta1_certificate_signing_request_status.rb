@@ -58,7 +58,7 @@ module Kubernetes
     # @return Array for valid properies with the reasons
     def list_invalid_properties
       invalid_properties = []
-      if !@certificate.nil? && @certificate !~ /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/
+      if !@certificate.nil? && @certificate !~ /^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/
         invalid_properties.push("invalid value for 'certificate', must conform to the pattern /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.")
       end
 
@@ -68,7 +68,7 @@ module Kubernetes
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      if !@certificate.nil? && @certificate !~ /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/
+      if !@certificate.nil? && @certificate !~ /^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/
         return false
       end
 
@@ -78,7 +78,7 @@ module Kubernetes
     # Custom attribute writer method with validation
     # @param [Object] certificate Value to be assigned
     def certificate=(certificate)
-      if !certificate.nil? && certificate !~ /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/
+      if !certificate.nil? && certificate !~ /^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/
         raise ArgumentError,
               "invalid value for 'certificate', must conform to the pattern /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/."
       end

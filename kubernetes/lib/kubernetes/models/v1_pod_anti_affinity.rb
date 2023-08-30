@@ -46,19 +46,18 @@ module Kubernetes
       attributes = attributes.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
 
       if attributes.key?(:preferredDuringSchedulingIgnoredDuringExecution) && (value = attributes[:preferredDuringSchedulingIgnoredDuringExecution]).is_a?(Array)
-          self.preferred_during_scheduling_ignored_during_execution = value
-        end
+        self.preferred_during_scheduling_ignored_during_execution = value
+      end
 
       return unless attributes.key?(:requiredDuringSchedulingIgnoredDuringExecution) && (value = attributes[:requiredDuringSchedulingIgnoredDuringExecution]).is_a?(Array)
-          self.required_during_scheduling_ignored_during_execution = value
-        end
+
+      self.required_during_scheduling_ignored_during_execution = value
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
     # @return Array for valid properies with the reasons
     def list_invalid_properties
       []
-      
     end
 
     # Check to see if the all the properties in the model are valid
@@ -86,8 +85,8 @@ module Kubernetes
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [preferred_during_scheduling_ignored_during_execution, 
-required_during_scheduling_ignored_during_execution].hash
+      [preferred_during_scheduling_ignored_during_execution,
+       required_during_scheduling_ignored_during_execution].hash
     end
 
     # Builds the object from hash
@@ -106,7 +105,8 @@ required_during_scheduling_ignored_during_execution].hash
           end
         elsif !attributes[self.class.attribute_map[key]].nil?
           send("#{key}=", _deserialize(type, attributes[self.class.attribute_map[key]]))
-        end # or else data not found in attributes(hash), not an issue as the data can be optional
+        end
+        # or else data not found in attributes(hash), not an issue as the data can be optional
       end
 
       self

@@ -49,7 +49,7 @@ module Kubernetes
       invalid_properties = []
       invalid_properties.push("invalid value for 'raw', raw cannot be nil.") if @raw.nil?
 
-      unless @raw&.match?(/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/)
+      unless @raw&.match?(/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/)
         invalid_properties.push("invalid value for 'raw', must conform to the pattern /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.")
       end
 
@@ -60,7 +60,7 @@ module Kubernetes
     # @return true if the model is valid
     def valid?
       return false if @raw.nil?
-      if @raw !~ /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/
+      if @raw !~ /^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/
         return false
       end
 
@@ -72,7 +72,7 @@ module Kubernetes
     def raw=(raw)
       raise ArgumentError, 'raw cannot be nil' if raw.nil?
 
-      unless raw&.match?(/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/)
+      unless raw&.match?(/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/)
         raise ArgumentError,
               "invalid value for 'raw', must conform to the pattern /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/."
       end

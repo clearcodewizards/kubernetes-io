@@ -61,7 +61,7 @@ module Kubernetes
     # @return Array for valid properies with the reasons
     def list_invalid_properties
       invalid_properties = []
-      if !@ca_bundle.nil? && @ca_bundle !~ /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/
+      if !@ca_bundle.nil? && @ca_bundle !~ /^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/
         invalid_properties.push("invalid value for 'ca_bundle', must conform to the pattern /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.")
       end
 
@@ -71,7 +71,7 @@ module Kubernetes
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      if !@ca_bundle.nil? && @ca_bundle !~ /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/
+      if !@ca_bundle.nil? && @ca_bundle !~ /^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/
         return false
       end
 
@@ -81,7 +81,7 @@ module Kubernetes
     # Custom attribute writer method with validation
     # @param [Object] ca_bundle Value to be assigned
     def ca_bundle=(ca_bundle)
-      if !ca_bundle.nil? && ca_bundle !~ /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/
+      if !ca_bundle.nil? && ca_bundle !~ /^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/
         raise ArgumentError,
               "invalid value for 'ca_bundle', must conform to the pattern /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/."
       end

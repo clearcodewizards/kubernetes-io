@@ -300,10 +300,10 @@ describe Kubernetes::KubeConfig do
       $VERBOSE = nil
 
       # Override constants for token and cert locations
-      Kubernetes::InClusterConfig::SERVICE_TOKEN_FILENAME =
-        Kubernetes::Testing.file_fixture('config/config').to_s
-      Kubernetes::InClusterConfig::SERVICE_CA_CERT_FILENAME =
-        Kubernetes::Testing.file_fixture('certs/ca.crt').to_s
+      stub_const('Kubernetes::InClusterConfig::SERVICE_TOKEN_FILENAME',
+                 Kubernetes::Testing.file_fixture('config/config').to_s)
+      stub_const('Kubernetes::InClusterConfig::SERVICE_CA_CERT_FILENAME',
+                 Kubernetes::Testing.file_fixture('certs/ca.crt').to_s)
       $VERBOSE = warn_level
 
       config = Kubernetes::Configuration.default_config
