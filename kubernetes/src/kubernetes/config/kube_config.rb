@@ -124,20 +124,18 @@ module Kubernetes
       end
     end
 
-    # rubocop:disable Metrics/AbcSize
     def setup_auth(user)
       # Convert token field to http header
       if user['token']
-        user['authorization'] = "Bearer #{user['token']}"
+        user_token(user)
       elsif user['username'] && user['password']
-        user_pass = "#{user['username']}:#{user['password']}"
-        user['authorization'] = "Basic #{Base64.strict_encode64(user_pass)}"
+        user_password(user)
       elsif user['auth-provider'] && user['auth-provider']['name'] == 'azure'
-        token = user['auth-provider']['config']['access-token']
-        user['authorization'] = "Bearer #{token}"
+        user_auth_provider_azure(user)
+      elsif user['exec'] && user['exec']['command']
+        user_exec(user)
       end
     end
-    # rubocop:enable Metrics/AbcSize
 
     def list_context_names
       config['contexts'].map { |e| e['name'] }
@@ -157,6 +155,29 @@ module Kubernetes
     end
 
     protected
+
+    def user_token(user)
+      user['authorization'] = "Bearer #{user['token']}"
+    end
+
+    def user_password(user)
+      user_pass = "#{user['username']}:#{user['password']}"
+      user['authorization'] = "Basic #{Base64.strict_encode64(user_pass)}"
+    end
+
+    def user_auth_provider_azure(user)
+      token = user['auth-provider']['config']['access-token']
+      user['authorization'] = "Bearer #{token}"
+    end
+
+    def user_exec(user)
+      args = ''
+      args = " #{user['exec']['args'].join(' ')}" if user['exec']['args']
+
+      command_stdout = JSON.parse(`#{user['exec']['command']}#{args}`)
+
+      user['authorization'] = "Bearer #{command_stdout['status']['token']}"
+    end
 
     def find_by_name(list, key, name)
       obj = list.find { |item| item['name'] == name }
